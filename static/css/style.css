@@ -32,7 +32,7 @@ h1 {
 }
 
 .blog-card-text-place{
-  padding-top: 0.25rem;
+  padding-top: 0rem;
   padding-bottom: 0.25rem;
 }
 
@@ -47,20 +47,22 @@ h1 {
     width: 60px;
     height: 60px;
     padding: 12px;
-
     background: #FFDF00;
     border: 2px solid #666;
     color: #666;
     text-align: center;
-
     font: 27px Arial, sans-serif;
 }
 
+.blog-card-top{
+    padding-right: 0rem;
+    padding-top: 0.25rem;
+}
+
 .blog-card-rating{
-  margin-top: 4px;
-  margin-right: 13px;
-  float: right;
-  position: relative;
+    padding: 0;
+    margin-left: 0.5rem;
+    margin-right: 1.5rem;
 }
 
 .blog-card-divider{
@@ -71,9 +73,8 @@ h1 {
 }
 
 .blog-card-tags{
-  margin-bottom: 0;
-  margin-top: 0.5rem;
-  margin-bottom: 0.25rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.25rem;
   padding-left: 1rem;
 }
 
