@@ -1,0 +1,101 @@
+/* CSS files add styling rules to your content */
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 2em;
+/*   background-color:  #966F33; */
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+}
+
+.card-outline{
+  margin-top: 20px;
+}
+
+.blog-card{
+  border: 2px solid black;
+}
+
+.blog-card-image {
+  height: 225px;
+  width: 146px;
+}
+
+.blog-card-image-place{
+  padding-right: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.blog-card-text-place{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.blog-card-title{
+  margin-bottom: 0;
+  padding-left: 1rem;
+  display: inline-block;
+}
+
+.numberCircle {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    padding: 12px;
+
+    background: #FFDF00;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+
+    font: 27px Arial, sans-serif;
+}
+
+.blog-card-rating{
+  margin-top: 4px;
+  margin-right: 13px;
+  float: right;
+  position: relative;
+}
+
+.blog-card-divider{
+  margin-left: 0.5rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  border-top: 1px solid;
+}
+
+.blog-card-tags{
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  padding-left: 1rem;
+}
+
+.blog-card-tag{
+  vertical-align: middle;
+  margin-top: -6px;
+}
+
+.blog-card-text{
+  magin-bottom: 0;
+  margin-top: 0.25rem;
+  padding-left: 1rem;
+}
+
+.blog-card-footer{
+  margin-bottom: 0.25rem;
+  position:absolute;
+  bottom:0;
+  width:100%;
+}
+
+.blog-card-footer-text{
+  margin: 0;
+  padding-left: 1rem;
+}

@@ -1,13 +1,81 @@
-<html>
-    <head>
-        <title>Welcome!</title>
-    </head>
-    <body>
-        <h1>Hello world!</h1>
-        <p>We can build a full webpage here</p>
-        <form>
-            <input type="text" name="nickname" placeholder="Enter your nickname"/>
-            <input type="submit" value="Submit"/>
-        </form>
-    </body>
-</html>
+{% extends 'base.html'%}
+
+{% block title%}{% endblock %}
+
+{% block content%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-info bg-info">
+            <button action="#" type="submit" class="btn bg-light text-info">
+                <h4 class="mb-0">
+                Our Book Blog
+                </h4>
+            </button>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                <a class="nav-link text-light" href="#">About Me</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-light" href="#">+New Post</a>
+                </li>
+            </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            <div class="row card-outline">
+                <div class="col-12">
+                    <div class="card blog-card">
+                        <div class="row no-gutters">
+                            <div class="col-auto blog-card-image-place">
+                                <img class="blog-card-image" src="https://images-na.ssl-images-amazon.com/images/I/71jJcPTGd3L.jpg" alt="NOTW Cover"/>
+                            </div>
+                            <div class="col blog-card-text-place">
+                                <div class="card-block">
+                                    <h3 class="card-title blog-card-title">
+                                        <em>The Name of the Wind</em>: A "Classic" Done Right
+                                    </h3>
+                                <div class="numberCircle blog-card-rating">
+                                    10
+                                </div>
+                                <hr class="blog-card-divider" style="margin-right: 85px"/>
+                                <h5 class="card-text blog-card-tags">
+                                    <form method="post" action="/">
+                                        <button type="button" class="btn badge badge-pill badge-secondary blog-card-tag" title="Author">Rothfuss, Patrick</button>
+                                        <button type="button" class="btn badge badge-pill badge-secondary blog-card-tag" title="Genre">Fantasy</button>
+                                    </form>
+                                </h5>
+                                <hr class="blog-card-divider"/>
+                                <p class="card-text blog-card-text">
+                                    Start of Review, ends with ... (<a href="#">see all</a>)
+                                </p>
+                            <div class="blog-card-footer">
+                                <hr class="blog-card-divider"/>
+                                <p class="blog-card-footer-text">
+                                    <small class="text-muted">
+                                        Last edited []
+                                    </small>
+                                </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+    <div class="col-3" style="margin-top:20px">
+        <div class="card" style="border: 2px solid black; height: 245px">
+            <div class="card-body pt-1 pb-2 px-0">
+                <h3 class="card-title mb-0 pl-3">
+                    Sort By
+                </h3>
+                <hr class="my-0" style="border-top: 1px solid"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
