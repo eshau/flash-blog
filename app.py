@@ -27,15 +27,23 @@ mongo = PyMongo(app)
 def home_page():
     return render_template('home_page.html', time=datetime.now())
 
-@app.route('/new_post/', methods=['GET','POST'])
+@app.route('/new_post', methods=['GET','POST'])
 def new_post():
     if request.method == 'GET':
         return render_template('new_post.html', time=datetime.now())
     else:
         books = mongo.db['books-list']
         form = request.form
+        book_title = form["book_title"]
+        post_title = form["post_title"]
+        author = form["author"]
+        genres = form.getlist('genres')
+        review = form["review"]
+        rating = form["rating"]
+        print(genres)
+        print(book_title, post_title, author, genres, review, rating)
         return render_template('home_page.html', time=datetime.now())
 
-@app.route('/blog_post/')
+@app.route('/blog_post')
 def blog_post():
     return render_template('blog_post.html')

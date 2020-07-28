@@ -8,11 +8,13 @@
     <div class="row">
         <div class="col-12">
             <nav class="navbar navbar-expand-lg navbar-info bg-info">
-                <button action="#" type="submit" class="btn bg-light text-info">
+                <form method='post'>
+                <button href="{{url_for('home_page')}}" type="submit" class="btn bg-light text-info">
                     <h4 class="mb-0">
                         Our Book Blog
                     </h4>
                 </button>
+                </form>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">About Me</a>
@@ -26,12 +28,12 @@
             <form method="POST" action="/new_post">
                 <div class="form-row">
                     <div class="form-group col-6 pr-4">
-                        <label for="book-title">Book Title</label>
-                        <input type="text" class="form-control" name="book-title">
+                        <label for="book_title">Book Title</label>
+                        <input type="text" class="form-control" name="book_title">
                     </div>
                     <div class="form-group col-6 pl-4">
-                        <label for="post-title">Post Title</label>
-                        <input type="text" class="form-control" name="post-title">
+                        <label for="post_title">Post Title</label>
+                        <input type="text" class="form-control" name="post_title">
                     </div>
                 </div>
                 <div class="form-row">
@@ -40,8 +42,8 @@
                         <input type="text" class="form-control" name="author">
                     </div>
                     <div class="form-group col-6 pl-4">
-                    <label for="genre">Genre</label><br>
-                    <select class="selectpicker form-control" name="genre" title="Select all that apply" multiple>
+                    <label for="genres">Genres</label><br>
+                    <select class="selectpicker form-control" name="genres" title="Select all that apply" multiple>
                         <option>Action/Adventure</option>
                         <option>Classics</option>
                         <option>Comic/Graphic Novel</option>
@@ -63,11 +65,11 @@
                 </div>
                 <div class="form-group">
                     <label for="review">Review</label>
-                    <textarea class="form-control" rows="7" name="author"></textarea>
+                    <textarea class="form-control" rows="7" name="review"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="rating">Rating</label>
-                    <input type="text" class="js-range-slider" value="" />
+                    <input type="text" class="js-range-slider" name="rating" />
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
