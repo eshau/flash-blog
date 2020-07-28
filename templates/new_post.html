@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+
+{% block title%}Add New Post{% endblock %}
+
+{% block content%}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-info bg-info">
+                <button action="#" type="submit" class="btn bg-light text-info">
+                    <h4 class="mb-0">
+                        Our Book Blog
+                    </h4>
+                </button>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">About Me</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row mt-3 mx-3">
+        <div class="col-12">
+            <form method="POST" action="/">
+                <div class="form-group">
+                    <label for="title">Post Title</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" class="form-control" name="author">
+                </div>
+                <div class="form-group">
+                    <label for="genre">Genre</label><br>
+                    <select class="selectpicker form-control" name="genre" title="Select all that apply" multiple>
+                        <div class="row">
+                            <div class="col-6">
+                                <option>Action/Adventure</option>
+                                <option>Classics</option>
+                                <option>Comic/Graphic Novel</option>
+                                <option>Detective/Mystery</option>
+                                <option>Fantasy</option>
+                                <option>Historical Fiction</option>
+                                <option>Horror</option>
+                                <option>Literary Fiction</option>
+                                <option>Romance</option>
+                                <option>Sci-Fiction</option>
+                                <option>Short-Stories</option>
+                                <option>Suspense/Thrillers</option>
+                                <option>Biographies</option>
+                                <option>Memoirs</option>
+                                <option>Poetry</option>
+                                <option>Other</option>
+                            </div>
+                        </div>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="review">Review</label>
+                    <textarea class="form-control" rows="7" name="author"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <input type="text" class="js-range-slider" value="" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
