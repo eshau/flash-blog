@@ -36,3 +36,6 @@ def new_post():
         form = request.form
         return render_template('home_page.html', time=datetime.now())
 
+@app.route('/blog_post/')
+def blog_post():
+    return render_template('blog_post.html')

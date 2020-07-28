@@ -1,0 +1,66 @@
+{% extends 'base.html'%}
+
+{% block title%}Our Blog{% endblock %}
+
+{% block content%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand navbar-info bg-info">
+                <button action="#" type="submit" class="btn bg-light text-info">
+                    <h4 class="mb-0">
+                        Our Book Blog
+                    </h4>
+                </button>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">About Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">+New Post</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-3">
+            <div class="card" style="width: 18rem; ">
+                <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/71jJcPTGd3L.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">
+                        Book Title: Book title
+                        <br>
+                        Author:  Book author
+                        <br>
+                        Genre: Genre
+                        <br>
+                        Ratings: Star Icons
+                        <br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-8" >
+            <div class="card" >
+                <div class="card-header">
+                    <small>
+                    Posted by user date/time
+                    </small>
+                </div>
+                <div class="card-body" name="top">
+                    <h5 class="card-title ">Title of Blog Post</h5>
+                    <p class="card-text">
+                        Review of book
+                    </p>
+                </div>
+                <div class="card-footer text-muted text-right">
+                    <a href="#top">Back to top</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
