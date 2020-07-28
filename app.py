@@ -12,13 +12,27 @@ import model
 
 # -- Initialization section --
 app = Flask(__name__)
+app.jinja_env.globals['current_time'] = datetime.now()
+
+MONGO_DBNAME = os.getenv("MONGO_DBNAME")
+MONGO_DB_USERNAME = os.getenv("MONGO_DB_USERNAME")
+MONGO_DB_PASSWORD = os.getenv("MONGO_DB_PASSWORD")
+app.config['MONGO_DBNAME'] = MONGO_DBNAME
+app.config['MONGO_URI'] = f'mongodb+srv://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD}@cluster0.r30xm.mongodb.net/{MONGO_DBNAME}?retryWrites=true&w=majority'
+
+mongo = PyMongo(app)
 
 # -- Routes section --
 @app.route('/')
-@app.route('/index/')
-def index():
-    return render_template("index.html", time=datetime.now())
+def home_page():
+    return render_template('home_page.html', time=datetime.now())
 
-@app.route('/new_post/')
+@app.route('/new_post/', methods=['GET','POST'])
 def new_post():
-    return render_template("new_post.html", time=datetime.now())
+    if request.method == 'GET':
+        return render_template('new_post.html', time=datetime.now())
+    else:
+        books = mongo.db['books-list']
+        form = request.form
+        return render_template('home_page.html', time=datetime.now())
+

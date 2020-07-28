@@ -23,39 +23,43 @@
     </div>
     <div class="row mt-3 mx-3">
         <div class="col-12">
-            <form method="POST" action="/">
-                <div class="form-group">
-                    <label for="title">Post Title</label>
-                    <input type="text" class="form-control" name="title">
+            <form method="POST" action="/new_post">
+                <div class="form-row">
+                    <div class="form-group col-6 pr-4">
+                        <label for="book-title">Book Title</label>
+                        <input type="text" class="form-control" name="book-title">
+                    </div>
+                    <div class="form-group col-6 pl-4">
+                        <label for="post-title">Post Title</label>
+                        <input type="text" class="form-control" name="post-title">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="author">Author</label>
-                    <input type="text" class="form-control" name="author">
-                </div>
-                <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col-6 pr-4">
+                        <label for="author">Author</label>
+                        <input type="text" class="form-control" name="author">
+                    </div>
+                    <div class="form-group col-6 pl-4">
                     <label for="genre">Genre</label><br>
                     <select class="selectpicker form-control" name="genre" title="Select all that apply" multiple>
-                        <div class="row">
-                            <div class="col-6">
-                                <option>Action/Adventure</option>
-                                <option>Classics</option>
-                                <option>Comic/Graphic Novel</option>
-                                <option>Detective/Mystery</option>
-                                <option>Fantasy</option>
-                                <option>Historical Fiction</option>
-                                <option>Horror</option>
-                                <option>Literary Fiction</option>
-                                <option>Romance</option>
-                                <option>Sci-Fiction</option>
-                                <option>Short-Stories</option>
-                                <option>Suspense/Thrillers</option>
-                                <option>Biographies</option>
-                                <option>Memoirs</option>
-                                <option>Poetry</option>
-                                <option>Other</option>
-                            </div>
-                        </div>
+                        <option>Action/Adventure</option>
+                        <option>Classics</option>
+                        <option>Comic/Graphic Novel</option>
+                        <option>Detective/Mystery</option>
+                        <option>Fantasy</option>
+                        <option>Historical Fiction</option>
+                        <option>Horror</option>
+                        <option>Literary Fiction</option>
+                        <option>Romance</option>
+                        <option>Sci-Fiction</option>
+                        <option>Short-Stories</option>
+                        <option>Suspense/Thrillers</option>
+                        <option>Biographies</option>
+                        <option>Memoirs</option>
+                        <option>Poetry</option>
+                        <option>Other</option>
                     </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="review">Review</label>
