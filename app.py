@@ -40,8 +40,15 @@ def new_post():
         genres = form.getlist('genres')
         review = form["review"]
         rating = form["rating"]
-        print(genres)
-        print(book_title, post_title, author, genres, review, rating)
+        book_review = {
+            "book_title" : book_title,
+            "post_title" : post_title,
+            "author" : author,
+            "genres" : genres,
+            "review" : review,
+            "rating" : rating,
+        }
+        books.insert(book_review)
         return render_template('home_page.html', time=datetime.now())
 
 @app.route('/blog_post')
