@@ -23,9 +23,9 @@
                                                 </h3>
                                                 <hr class="m-0" style="border-top: 1px solid;"/>
                                                 <h5 class="card-text mt-1">
-                                                    <a href="/sort_by/{{book_review.author}}" class="btn badge badge-pill badge-secondary align-middle" title="Author">{{book_review.author}}</a>
+                                                    <a href="/tag_by/{{book_review.author}}" class="btn badge badge-pill badge-secondary align-middle" title="Author">{{book_review.author}}</a>
                                                     {% for genre in book_review.genres %}
-                                                        <a href="/sort_by/{{genre}}"class="btn badge badge-pill badge-secondary align-middle" title="Genre">{{genre}}</a>
+                                                        <a href="/tag_by/{{genre}}"class="btn badge badge-pill badge-secondary align-middle" title="Genre">{{genre}}</a>
                                                     {% endfor %}
                                                 </h5>
                                             </div>
@@ -39,7 +39,7 @@
                                         </div>
                                     </li>
                                     <li class="list-group-item p-0 d-flex flex-column flex-fill" style="border-top: 1px solid; black border-bottom: 0">
-                                        <p class="pb-0 mb-0" id="wrapper" style="padding-top: 0.75rem; padding-left: 0.5rem; padding-right: 0.35rem;">
+                                        <p class="pb-0 mb-0 wrapper" style="padding-top: 0.75rem; padding-left: 0.5rem; padding-right: 0.35rem;">
                                             {{book_review.review}}
                                         </p>
                                     </li>
@@ -66,13 +66,72 @@
         {% endfor %}
     </div>
     <div class="col-3" style="margin-top:20px">
-        <div class="card" style="border: 2px solid black; height: 245px">
-            <div class="card-body pt-1 pb-2 px-0">
-                <h3 class="card-title mb-0 pl-3">
-                    Sort By
-                </h3>
-                <hr class="my-0" style="border-top: 1px solid"/>
-            </div>
+        <div class="card px-2 pb-2" style="border: 2px solid black; height: auto;">
+            <h3 class="card-title pt-2 mb-0">
+                Sort By
+            </h3>
+            <hr class="mt-0 mb-1" style="border-top: 1px solid"/>
+            <form method="POST" action="/sort_by" class="pl-1">
+                <div class="form-group mb-0">
+                    <h4 class="mb-1"><strong>Genre</strong></h4>
+                </div>
+                <div class="form-group mb-0 ml-1">
+                    <label for="genres_options" class="mb-0">Genre Selection Options</label>
+                </div>
+                <div class="form-row ml-0">
+                    <div class="form-group col-4 mb-0">
+                        <label class="radio-inline mb-0"><input type="radio" name="genres_options" value="all" checked> All</label>
+                    </div>
+                    <div class="form-group col-4 mb-0">
+                        <label class="radio-inline mb-0"><input type="radio" name="genres_options" value="any"> Any</label>
+                    </div>
+                    <div class="form-group col-4 mb-0">
+                        <label class="radio-inline mb-0"><input type="radio" name="genres_options" value="none"> None</label>
+                    </div>
+                </div>
+                <label for="genres" class="mb-0 ml-1">Genres</label><br>
+                <div class="form-group ml-1">
+                    <select class="selectpicker form-control" name="genres" data-title="Select the genres you want to include" multiple>
+                        <option>Action/Adventure</option>
+                        <option>Classics</option>
+                        <option>Comic/Graphic Novel</option>
+                        <option>Detective/Mystery</option>
+                        <option>Fantasy</option>
+                        <option>Historical Fiction</option>
+                        <option>Horror</option>
+                        <option>Literary Fiction</option>
+                        <option>Romance</option>
+                        <option>Sci-Fiction</option>
+                        <option>Short-Stories</option>
+                        <option>Suspense/Thrillers</option>
+                        <option>Biographies</option>
+                        <option>Memoirs</option>
+                        <option>Poetry</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group mb-0">
+                    <h4 class="mb-1"><strong>Ratings</strong></h4>
+                </div>
+                <div class="form-group mb-0 ml-1">
+                    <label for="ratings_range_options" class="mb-0">Ratings Range Options</label>
+                </div>
+                <div class="form-row ml-0">
+                    <div class="form-group col-4 mb-0">
+                        <label class="radio-inline mb-0"><input type="radio" name="ratings_range_options" value="max_to_min" checked> Max to Min</label>
+                    </div>
+                    <div class="form-group col-4 mb-0">
+                        <label class="radio-inline mb-0"><input type="radio" name="ratings_range_options" value="min_to_max"> Min to Max</label>
+                    </div>
+                </div>
+                <div class="form-group ml-1">
+                    <label for="ratings_range_slider">Rating</label>
+                    <input type="text" id="sort-ratings-slider" name="ratings_range_slider" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

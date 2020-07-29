@@ -63,7 +63,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
         <script>
-            var $range = $(".js-range-slider");
+            var $range = $("#new-ratings-slider");
             $range.ionRangeSlider({
                 skin: "big",
                 type: "single",
@@ -75,10 +75,27 @@
                 grid_num: 2,
             });
         </script>
+        <script>
+            var $range = $("#sort-ratings-slider");
+            $range.ionRangeSlider({
+                skin: "round",
+                type: "double",
+                min: 0,
+                max: 10,
+                from: 5,
+                to: 10,
+                step: 0.5,
+                grid: true,
+                grid_num: 2,
+            });
+        </script>
         <script src="/static/js/clamp.js"></script>
         <script>
-            var module = document.getElementById("wrapper");
-            $clamp(module, {clamp: 4});
+            var arr = document.getElementsByClassName("wrapper");
+            var i;
+            for (i=0; i < arr.length; i++){
+                $clamp(arr[i], {clamp: 4});
+            }
         </script>
         <!-- Visit https://feathericons.com/ to see icons you can use -->
     </body>

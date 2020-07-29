@@ -25,12 +25,13 @@ app.config['MONGO_URI'] = f'mongodb+srv://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD
 mongo = PyMongo(app)
 
 # -- Routes section --
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def home_page():
     data = {
         'book_reviews':mongo.db["books-list"].find({}),
     }
     return render_template('home_page.html', data=data, time=datetime.now())
+
 
 @app.route('/new_post', methods=['GET','POST'])
 def new_post():
@@ -55,7 +56,7 @@ def new_post():
             "genres" : genres,
             "image_link" : image_link,
             "review" : review,
-            "rating" : rating,
+            "rating" : int(rating),
             "time" : date_time,
         }
         book_reviews.insert(book_review)
@@ -68,8 +69,8 @@ def blog_post(book_review_id):
     book_review = book_reviews.find_one({'_id':book_review_id})
     return render_template('blog_post.html', book_review=book_review, time=datetime.now())
 
-@app.route('/sort_by/<book_review_tag>')
-def sort_by(book_review_tag):
+@app.route('/tag_by/<book_review_tag>')
+def tag_by(book_review_tag):
     book_reviews = mongo.db["books-list"]
     genres =   ["Action/Adventure", "Classics", "Comic/Graphic Novel", "Detective/Mystery",
                 "Fantasy", "Historical Fiction", "Horror", "Literary Fiction",
@@ -85,3 +86,69 @@ def sort_by(book_review_tag):
             'book_reviews':book_reviews.find({'author':book_review_tag})
         }
     return render_template('home_page.html', data=data, time=datetime.now())
+
+@app.route('/sort_by', methods=['GET', 'POST'])
+def sort_by():
+    if request.method == 'GET':
+        return "hi"
+    else:
+        book_reviews = mongo.db["books-list"]
+        form = request.form
+        genres_options = form["genres_options"]
+        print(genres_options)
+        genres = form.getlist("genres")
+        print(genres)
+        ratings_range_options = form["ratings_range_options"]
+        print(ratings_range_options)
+        ratings_range_slider = form["ratings_range_slider"].split(";")
+        print(ratings_range_slider)
+        lower = int(ratings_range_slider[0])
+        upper = int(ratings_range_slider[1])
+        if genres_options == 'all':
+            print('all')
+            if genres:
+                print('yes')
+                book_reviews = book_reviews.find(
+                    {'genres':{'$all':[genre for genre in genres]},
+                    'rating':{'$gte': lower, '$lte': upper}
+                    }
+                ).sort('$natural', -1)
+                for book in book_reviews:
+                    print(book)            
+            else:
+                print('no')
+                book_reviews = {}
+        elif genres_options == 'any':
+            print('any')
+            if genres:
+                print('yes')
+                book_reviews = book_reviews.find(
+                    {'genres':{'$in':[genre for genre in genres]},
+                    'rating':{'$gte': lower, '$lte': upper}
+                    }
+                ).sort('$natural', -1)
+                for book in book_reviews:
+                    print(book)
+            else:
+                print('no')
+                book_reviews = {}
+        else:
+            print('none')
+            if genres:
+                print('yes')
+                book_reviews = book_reviews.find(
+                    {'genres':{'$not': {'$in':genres}},
+                    'rating':{'$gte': lower, '$lte': upper}
+                    }
+                ).sort('$natural', -1)
+                for book in book_reviews:
+                    print(book)
+            else:
+                print('no')
+                book_reviews = book_reviews.find(
+                    {}
+                ).sort('$natural', -1)
+        data = {
+            'book_reviews': book_reviews
+        }
+        return render_template('home_page.html', data=data, time=datetime.now())
