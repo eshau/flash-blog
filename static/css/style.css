@@ -22,3 +22,27 @@ h1 {
     text-align: center;
     font: 22px Arial, sans-serif;
 }
+
+.star {
+    font-size: x-large;
+    width: 50px;
+    display: inline-block;
+    color: gray;
+}
+.star:last-child {
+    margin-right: 0;
+}
+.star:before {
+    content:'\2605';
+}
+.star.on {
+    color: gold;
+}
+.star.half:after {
+    content:'\2605';
+    color: gold;
+    position: absolute;
+    margin-left: -20px;
+    width: 10px;
+    overflow: hidden;
+}

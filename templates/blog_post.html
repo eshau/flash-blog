@@ -3,44 +3,84 @@
 {% block title%}Our Blog{% endblock %}
 
 {% block content%}
-<br>
-<br>
-<div class="row">
+<div class="row" style="margin-top: 50px;">
     <div class="col-3">
-        <div class="card" style="width: 18rem; ">
+        <div class="card" style="width:85%">
             <img class="card-img-top" src={{book_review.image_link}} alt="Card image cap">
-            <div class="card-body">
+            <div class="card-body" style="font-size: 18px;">
                 <p class="card-text">
-                    Book Title: {{book_review.book_title}}
+                    <strong>Book Title</strong>:
                     <br>
-                    Author: {{book_review.author}}
+                    <em style="font-size: 17px;">{{book_review.book_title}}</em>
                     <br>
-                    Genre: {{ book_review.genres |join(' ') }}
+                    <strong>Author</strong>:
                     <br>
-                    Ratings: {{book_review.rating}}
+                    <a href="/tag_by/{{book_review.author}}" class="btn badge badge-pill badge-secondary" style="display:inline" title="Author">{{book_review.author}}</a>
+                    <br>
+                    <strong>Genres</strong>:
+                    <br>
+                    {% for genre in book_review.genres %}
+                        <a href="/tag_by/{{genre}}"class="btn badge badge-pill badge-secondary" style="display: in-line;" title="Genre">{{genre}}</a>
+                    {% endfor %}
+                    <br>
+                    <strong>Rating</strong>:
+                    <br>
+                    <span id="demo">
+                    </span>
                     <br>
                 </p>
             </div>
         </div>
     </div>
-    <div class="col-8" >
-        <div class="card" >
+    <div class="col-9">
+        <div class="card align-self-end">
             <div class="card-header">
-                <small>
-                Posted on {{book_review.time}}
-                </small>
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="card-title mb-0" style="display:inline; float:left;"><em>{{book_review.book_title}}</em>: {{book_review.post_title}}</h5>
+                    </div>
+                    <div class="col-4">
+                        <span style="display:inline; float:right;">
+                            <small>
+                                Posted on {{book_review.time}}
+                            </small>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="card-body" name="top">
-                <h5 class="card-title "><em>{{book_review.book_title}}</em>: {{book_review.post_title}}</h5>
+            <div class="card-body px-4 py-3" name="top">
                 <p class="card-text">
                     {{book_review.review}}
                 </p>
             </div>
-            <div class="card-footer text-muted text-right">
-                <a href="#top">Back to top</a>
+            <div class="card-footer text-right p-2">
+                <a href="#top" class="btn btn-primary">Back to top</a>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function make_stars(rating) {
+        var stars = "";
+        var i = 0;
+        while (i < 10){
+            if (rating - i <= 0){
+                stars += '<span class="star" style="margin-right: -1.25em;"></span>';
+            }
+            else if (rating - i == 0.5){
+                stars += '<span class="star half" style="margin-right: -1.25em;"></span>';
+            }
+            else{
+                stars += '<span class="star on" style="margin-right: -1.25em;"></span>';
+            }
+            i += 1;
+        }
+        return stars;
+    }
+</script>
+<script>
+    document.getElementById("demo").innerHTML = make_stars({{book_review.rating}})
+</script>
 
 {% endblock %}
