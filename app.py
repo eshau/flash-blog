@@ -78,10 +78,10 @@ def sort_by(book_review_tag):
                 ]
     if book_review_tag in genres:
         data = {
-            'book_reviews':mongo.db["books-list"].find({'genres':book_review_tag})
+            'book_reviews':book_reviews.find({'genres':book_review_tag})
         }
     else:
         data = {
-            'book_reviews':mongo.db["books-list"].find({'author':book_review_tag})
+            'book_reviews':book_reviews.find({'author':book_review_tag})
         }
-    return render_template('home_page.html', data=data, time=datetime.now())    
+    return render_template('home_page.html', data=data, time=datetime.now())
