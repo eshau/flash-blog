@@ -25,54 +25,65 @@
     </div>
     <div class="row">
         <div class="col-9">
-            <div class="row card-outline">
-                <div class="col-12">
-                    <div class="card blog-card">
-                        <div class="row no-gutters">
-                            <div class="col-auto blog-card-image-place">
-                                <img class="blog-card-image" src="https://images-na.ssl-images-amazon.com/images/I/71jJcPTGd3L.jpg" alt="NOTW Cover"/>
-                            </div>
-                            <div class="col blog-card-text-place">
-                                <div class="card-block">
-                                    <div class="row">
-                                        <div class="col blog-card-top">
-                                            <h3 class="card-title blog-card-title">
-                                                <em>The Name of the Wind</em>: A "Classic" Done Right
-                                            </h3>
-                                            <hr class="blog-card-divider"/>
-                                            <h5 class="card-text blog-card-tags">
-                                                <form method="post" action="/">
-                                                    <button type="button" class="btn badge badge-pill badge-secondary blog-card-tag" title="Author">Rothfuss, Patrick</button>
-                                                    <button type="button" class="btn badge badge-pill badge-secondary blog-card-tag" title="Genre">Fantasy</button>
-                                                </form>
-                                            </h5>
-                                        </div>
-                                        <div class="col-auto blog-card-rating">
-                                            <div class="d-flex h-100 align-items-center">
-                                                <div class="numberCircle">
-                                                    10
+            {% for book_review in data.book_reviews %}
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-12">
+                        <div class="card" style="border: 2px solid black;">
+                            <div class="row no-gutters">
+                                <div class="col-auto p-2">
+                                    <img src="https://images-na.ssl-images-amazon.com/images/I/71jJcPTGd3L.jpg" alt="NOTW Cover" style="height: 225px; width: 146px;"/>
+                                </div>
+                                <div class="col pl-0 pr-2 pt-2 pb-0">
+                                    <ul class="list-group list-group-flush p-0" style="height:225px">
+                                        <li class="list-group-item p-0" style="border-bottom: 0">
+                                            <div class="row">
+                                                <div class="col p-0 ml-3">
+                                                    <h3 class="card-title mt-n1 mb-0">
+                                                        <em>{{book_review.book_title}}</em>: {{book_review.post_title}}
+                                                    </h3>
+                                                    <hr class="m-0" style="border-top: 1px solid;"/>
+                                                    <h5 class="card-text mt-1">
+                                                        <button type="button" class="btn badge badge-pill badge-secondary align-middle" title="Author">{{book_review.author}}</button>
+                                                        {% for genre in book_review.genres %}
+                                                            <button type="button" class="btn badge badge-pill badge-secondary align-middle" title="Genre">{{genre}}</button>
+                                                        {% endfor %}
+                                                    </h5>
+                                                </div>
+                                                <div class="col-auto pb-2 mr-2">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <div class="numberCircle">
+                                                            {{book_review.rating}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <hr class="blog-card-divider"/>
-                                    <p class="card-text blog-card-text">
-                                        Start of Review, ends with ... (<a href="#">see all</a>)
-                                    </p>
-                                </div>
-                                <div class="blog-card-footer">
-                                    <hr class="blog-card-divider"/>
-                                    <p class="blog-card-footer-text">
-                                        <small class="text-muted">
-                                            Last edited []
-                                        </small>
-                                    </p>
+                                        </li>
+                                        <li class="list-group-item p-0 d-flex flex-column flex-fill" style="border-top: 1px solid; black border-bottom: 0">
+                                            <p class="pb-0 mb-0" id="wrapper" style="padding-top: 0.75rem; padding-left: 0.5rem; padding-right: 0.35rem;">
+                                                {{book_review.review}}
+                                            </p>
+                                        </li>
+                                        <li class="list-group-item p-0" style="border-top: 1px solid black">
+                                            <div class="d-flex">
+                                                <div class="mr-auto align-self-end" style="margin-bottom: -0.4rem;">
+                                                    <small class="text-muted">
+                                                        Last edited []
+                                                    </small>
+                                                </div>
+                                                <div class="ml-auto" style="margin-bottom: -0.15rem;"> 
+                                                    <button class="btn btn-primary">
+                                                        Read More
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
-            </div>      
+            </div>
+            {% endfor %}
         </div>
         <div class="col-3" style="margin-top:20px">
             <div class="card" style="border: 2px solid black; height: 245px">
@@ -86,7 +97,4 @@
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}

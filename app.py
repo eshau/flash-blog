@@ -4,6 +4,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import url_for
+from flask import redirect
 from flask_pymongo import PyMongo
 import os
 from dotenv import load_dotenv
@@ -25,7 +26,10 @@ mongo = PyMongo(app)
 # -- Routes section --
 @app.route('/')
 def home_page():
-    return render_template('home_page.html', time=datetime.now())
+    data = {
+        'book_reviews':mongo.db["books-list"].find({}),
+    }
+    return render_template('home_page.html', data=data, time=datetime.now())
 
 @app.route('/new_post', methods=['GET','POST'])
 def new_post():
@@ -49,7 +53,10 @@ def new_post():
             "rating" : rating,
         }
         books.insert(book_review)
-        return render_template('home_page.html', time=datetime.now())
+        data = {
+        'book_reviews':mongo.db["books-list"].find({}),
+        }
+        return render_template('home_page.html', data=data, time=datetime.now())
 
 @app.route('/blog_post')
 def blog_post():
