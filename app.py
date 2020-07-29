@@ -28,7 +28,7 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET','POST'])
 def home_page():
     data = {
-        'book_reviews':mongo.db["books-list"].find({}).sort('$natural', -1),
+        'book_reviews':mongo.db["books-list"].find({}).sort([('rating', -1), ('$natural', -1)]),
     }
     return render_template('home_page.html', data=data, time=datetime.now())
 
@@ -104,6 +104,7 @@ def sort_by():
         ratings_range_slider = form["ratings_range_slider"].split(";")
         lower = int(ratings_range_slider[0])
         upper = int(ratings_range_slider[1])
+        order = -1 if ratings_range_options == 'max_to_min' else 1
         if genres_options == 'all':
             if genres:
                 data = {
@@ -111,7 +112,7 @@ def sort_by():
                                             {'genres':{'$all':genres},
                                             'rating':{'$gte': lower, '$lte': upper}
                                             }
-                                        ).sort('$natural', -1)
+                                        ).sort([('rating', order), ('$natural', -1)])
                 }      
             else:
                 data = {}
@@ -122,7 +123,7 @@ def sort_by():
                                             {'genres':{'$in':genres},
                                             'rating':{'$gte': lower, '$lte': upper}
                                             }
-                                        ).sort('$natural', -1)
+                                        ).sort([('rating', order), ('$natural', -1)])
                 }
             else:
                 data = {}
@@ -133,13 +134,13 @@ def sort_by():
                                             {'genres':{'$not': {'$in':genres}},
                                             'rating':{'$gte': lower, '$lte': upper}
                                             }
-                                        ).sort('$natural', -1)
+                                        ).sort([('rating', order), ('$natural', -1)])
                 }
             else:
                 data = {
                     'book_reviews' : book_reviews.find(
                                         {}
-                                    ).sort('$natural', -1)
+                                    ).sort([('rating', order), ('$natural', -1)])
                 }
         print(book_reviews)
         return render_template('home_page.html', data=data, time=datetime.now())
