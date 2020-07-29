@@ -28,7 +28,7 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET','POST'])
 def home_page():
     data = {
-        'book_reviews':mongo.db["books-list"].find({}),
+        'book_reviews':mongo.db["books-list"].find({}).sort('$natural', -1),
     }
     return render_template('home_page.html', data=data, time=datetime.now())
 
@@ -47,6 +47,10 @@ def new_post():
         image_link = form['image_link']
         review = form["review"]
         rating = form["rating"]
+        if float(rating) % 1 == 0:
+            rating = int(rating)
+        else:
+            rating = float(rating)
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         book_review = {
@@ -56,7 +60,7 @@ def new_post():
             "genres" : genres,
             "image_link" : image_link,
             "review" : review,
-            "rating" : int(rating),
+            "rating" : rating,
             "time" : date_time,
         }
         book_reviews.insert(book_review)
@@ -95,60 +99,47 @@ def sort_by():
         book_reviews = mongo.db["books-list"]
         form = request.form
         genres_options = form["genres_options"]
-        print(genres_options)
         genres = form.getlist("genres")
-        print(genres)
         ratings_range_options = form["ratings_range_options"]
-        print(ratings_range_options)
         ratings_range_slider = form["ratings_range_slider"].split(";")
-        print(ratings_range_slider)
         lower = int(ratings_range_slider[0])
         upper = int(ratings_range_slider[1])
         if genres_options == 'all':
-            print('all')
             if genres:
-                print('yes')
-                book_reviews = book_reviews.find(
-                    {'genres':{'$all':[genre for genre in genres]},
-                    'rating':{'$gte': lower, '$lte': upper}
-                    }
-                ).sort('$natural', -1)
-                for book in book_reviews:
-                    print(book)            
+                data = {
+                    'book_reviews' :    book_reviews.find(
+                                            {'genres':{'$all':genres},
+                                            'rating':{'$gte': lower, '$lte': upper}
+                                            }
+                                        ).sort('$natural', -1)
+                }      
             else:
-                print('no')
-                book_reviews = {}
+                data = {}
         elif genres_options == 'any':
-            print('any')
             if genres:
-                print('yes')
-                book_reviews = book_reviews.find(
-                    {'genres':{'$in':[genre for genre in genres]},
-                    'rating':{'$gte': lower, '$lte': upper}
-                    }
-                ).sort('$natural', -1)
-                for book in book_reviews:
-                    print(book)
+                data = {
+                    'book_reviews' :    book_reviews.find(
+                                            {'genres':{'$in':genres},
+                                            'rating':{'$gte': lower, '$lte': upper}
+                                            }
+                                        ).sort('$natural', -1)
+                }
             else:
-                print('no')
-                book_reviews = {}
+                data = {}
         else:
-            print('none')
             if genres:
-                print('yes')
-                book_reviews = book_reviews.find(
-                    {'genres':{'$not': {'$in':genres}},
-                    'rating':{'$gte': lower, '$lte': upper}
-                    }
-                ).sort('$natural', -1)
-                for book in book_reviews:
-                    print(book)
+                data = {
+                    'book_reviews' :    book_reviews.find(
+                                            {'genres':{'$not': {'$in':genres}},
+                                            'rating':{'$gte': lower, '$lte': upper}
+                                            }
+                                        ).sort('$natural', -1)
+                }
             else:
-                print('no')
-                book_reviews = book_reviews.find(
-                    {}
-                ).sort('$natural', -1)
-        data = {
-            'book_reviews': book_reviews
-        }
+                data = {
+                    'book_reviews' : book_reviews.find(
+                                        {}
+                                    ).sort('$natural', -1)
+                }
+        print(book_reviews)
         return render_template('home_page.html', data=data, time=datetime.now())
