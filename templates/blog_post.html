@@ -15,12 +15,12 @@
                     <br>
                     <strong>Author</strong>:
                     <br>
-                    <a href="/tag_by/{{book_review.author}}" class="btn badge badge-pill badge-secondary" style="display:inline" title="Author">{{book_review.author}}</a>
+                    <a href="/tag_by/{{model.replace_backslash(book_review.author)}}" class="btn badge badge-pill badge-secondary" style="display:inline" title="Author">{{book_review.author}}</a>
                     <br>
                     <strong>Genres</strong>:
                     <br>
                     {% for genre in book_review.genres %}
-                        <a href="/tag_by/{{genre}}"class="btn badge badge-pill badge-secondary" style="display: in-line;" title="Genre">{{genre}}</a>
+                        <a href="/tag_by/{{model.replace_backslash(genre)}}"class="btn badge badge-pill badge-secondary" style="display: in-line;" title="Genre">{{genre}}</a>
                     {% endfor %}
                     <br>
                     <strong>Rating</strong>:
@@ -42,7 +42,7 @@
                     <div class="col-4">
                         <span style="display:inline; float:right;">
                             <small>
-                                Posted on {{book_review.time}}
+                                Posted on {{model.time_to_readable(book_review.time)}}
                             </small>
                         </span>
                     </div>

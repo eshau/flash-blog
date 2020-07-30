@@ -9,21 +9,21 @@
             <div class="form-row">
                 <div class="form-group col-6 pr-4">
                     <label for="book_title">Book Title</label>
-                    <input type="text" class="form-control" name="book_title">
+                    <input type="text" class="form-control" name="book_title" required>
                 </div>
                 <div class="form-group col-6 pl-4">
                     <label for="post_title">Post Title</label>
-                    <input type="text" class="form-control" name="post_title">
+                    <input type="text" class="form-control" name="post_title" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-6 pr-4">
                     <label for="author">Author</label>
-                    <input type="text" class="form-control" name="author">
+                    <input type="text" class="form-control" name="author" required>
                 </div>
                 <div class="form-group col-6 pl-4">
                 <label for="genres">Genres</label><br>
-                <select class="selectpicker form-control" name="genres" title="Select all that apply" multiple>
+                <select class="selectpicker form-control" name="genres" title="Select all that apply" multiple required>
                     <option>Action/Adventure</option>
                     <option>Classics</option>
                     <option>Comic/Graphic Novel</option>
@@ -33,7 +33,7 @@
                     <option>Horror</option>
                     <option>Literary Fiction</option>
                     <option>Romance</option>
-                    <option>Sci-Fiction</option>
+                    <option>Science Fiction</option>
                     <option>Short-Stories</option>
                     <option>Suspense/Thrillers</option>
                     <option>Biographies</option>
@@ -45,15 +45,15 @@
             </div>
             <div class="form-group">
                 <label for="image_link">Book Cover Image Link</label>
-                <input type="text" class="form-control" name="image_link">
+                <input type="text" class="form-control" name="image_link" required>
             </div>
             <div class="form-group">
                 <label for="review">Review</label>
-                <textarea class="form-control" rows="7" name="review"></textarea>
+                <textarea class="form-control" rows="7" name="review" required></textarea>
             </div>
             <div class="form-group">
                 <label for="rating">Rating</label>
-                <input type="text" id="new-ratings-slider" name="rating" />
+                <input type="text" id="new-ratings-slider" name="rating" required/>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>

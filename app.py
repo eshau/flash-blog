@@ -28,9 +28,9 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET','POST'])
 def home_page():
     data = {
-        'book_reviews':mongo.db["books-list"].find({}).sort([('rating', -1), ('$natural', -1)]),
+        'book_reviews':mongo.db["books-list"].find({}).sort('time', -1).limit(20),
     }
-    return render_template('home_page.html', data=data, time=datetime.now())
+    return render_template('home_page.html', data=data, model=model, time=datetime.now())
 
 
 @app.route('/new_post', methods=['GET','POST'])
@@ -51,8 +51,7 @@ def new_post():
             rating = int(rating)
         else:
             rating = float(rating)
-        now = datetime.now()
-        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        now = datetime.utcnow()
         book_review = {
             "book_title" : book_title,
             "post_title" : post_title,
@@ -61,7 +60,7 @@ def new_post():
             "image_link" : image_link,
             "review" : review,
             "rating" : rating,
-            "time" : date_time,
+            "time" : now,
         }
         book_reviews.insert(book_review)
         return redirect(url_for('home_page'))
@@ -71,25 +70,27 @@ def blog_post(book_review_id):
     book_reviews = mongo.db["books-list"]
     book_review_id = ObjectId(book_review_id)
     book_review = book_reviews.find_one({'_id':book_review_id})
-    return render_template('blog_post.html', book_review=book_review, time=datetime.now())
+    return render_template('blog_post.html', book_review=book_review, model=model, time=datetime.now())
 
 @app.route('/tag_by/<book_review_tag>')
 def tag_by(book_review_tag):
     book_reviews = mongo.db["books-list"]
-    genres =   ["Action/Adventure", "Classics", "Comic/Graphic Novel", "Detective/Mystery",
+    genres =   ["Action|Adventure", "Classics", "Comic|Graphic Novel", "Detective|Mystery",
                 "Fantasy", "Historical Fiction", "Horror", "Literary Fiction",
-                "Romance", "Sci-Fiction", "Short-Stories", "Suspense/Thrillers",
+                "Romance", "Science Fiction", "Short-Stories", "Suspense|Thrillers",
                 "Biographies", "Memoirs", "Poetry", "Other",
                 ]
     if book_review_tag in genres:
+        book_review_tag = book_review_tag.replace('|','/')
         data = {
-            'book_reviews':book_reviews.find({'genres':book_review_tag})
+            'book_reviews':book_reviews.find({'genres':book_review_tag}).sort([('rating',-1),('time', -1)])
         }
+        print(len(data))
     else:
         data = {
-            'book_reviews':book_reviews.find({'author':book_review_tag})
+            'book_reviews':book_reviews.find({'author':book_review_tag}).sort([('rating',-1),('time', -1)])
         }
-    return render_template('home_page.html', data=data, time=datetime.now())
+    return render_template('home_page.html', data=data, model=model, time=datetime.now())
 
 @app.route('/sort_by', methods=['GET', 'POST'])
 def sort_by():
@@ -102,8 +103,8 @@ def sort_by():
         genres = form.getlist("genres")
         ratings_range_options = form["ratings_range_options"]
         ratings_range_slider = form["ratings_range_slider"].split(";")
-        lower = int(ratings_range_slider[0])
-        upper = int(ratings_range_slider[1])
+        lower = float(ratings_range_slider[0])
+        upper = float(ratings_range_slider[1])
         order = -1 if ratings_range_options == 'max_to_min' else 1
         if genres_options == 'all':
             if genres:
@@ -112,7 +113,7 @@ def sort_by():
                                             {'genres':{'$all':genres},
                                             'rating':{'$gte': lower, '$lte': upper}
                                             }
-                                        ).sort([('rating', order), ('$natural', -1)])
+                                        ).sort([('rating',order),('time', -1)])
                 }      
             else:
                 data = {}
@@ -123,7 +124,7 @@ def sort_by():
                                             {'genres':{'$in':genres},
                                             'rating':{'$gte': lower, '$lte': upper}
                                             }
-                                        ).sort([('rating', order), ('$natural', -1)])
+                                        ).sort([('rating',order),('time', -1)])
                 }
             else:
                 data = {}
@@ -134,13 +135,12 @@ def sort_by():
                                             {'genres':{'$not': {'$in':genres}},
                                             'rating':{'$gte': lower, '$lte': upper}
                                             }
-                                        ).sort([('rating', order), ('$natural', -1)])
+                                        ).sort([('rating',order),('time', -1)])
                 }
             else:
                 data = {
                     'book_reviews' : book_reviews.find(
-                                        {}
-                                    ).sort([('rating', order), ('$natural', -1)])
+                                        {'rating':{'$gte': lower, '$lte': upper}}
+                                    ).sort([('rating',order),('time', -1)])
                 }
-        print(book_reviews)
-        return render_template('home_page.html', data=data, time=datetime.now())
+        return render_template('home_page.html', data=data, model=model, time=datetime.now())

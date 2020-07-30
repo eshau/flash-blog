@@ -23,9 +23,9 @@
                                                 </h3>
                                                 <hr class="m-0" style="border-top: 1px solid;"/>
                                                 <h5 class="card-text mt-1">
-                                                    <a href="/tag_by/{{book_review.author}}" class="btn badge badge-pill badge-secondary align-middle" title="Author">{{book_review.author}}</a>
+                                                    <a href="/tag_by/{{model.replace_backslash(book_review.author)}}" class="btn badge badge-pill badge-secondary" style="display: in-line;" title="Author">{{book_review.author}}</a>
                                                     {% for genre in book_review.genres %}
-                                                        <a href="/tag_by/{{genre}}"class="btn badge badge-pill badge-secondary align-middle" title="Genre">{{genre}}</a>
+                                                        <a href="/tag_by/{{model.replace_backslash(genre)}}"class="btn badge badge-pill badge-secondary" style="display: in-line;" title="Genre">{{genre}}</a>
                                                     {% endfor %}
                                                 </h5>
                                             </div>
@@ -47,7 +47,7 @@
                                         <div class="d-flex">
                                             <div class="mr-auto align-self-end" style="margin-bottom: -0.4rem;">
                                                 <small class="text-muted">
-                                                    Last edited {{book_review.time}}
+                                                    Last edited {{model.time_to_readable(book_review.time)}}
                                                 </small>
                                             </div>
                                             <div class="ml-auto" style="margin-bottom: -0.15rem;"> 
@@ -101,7 +101,7 @@
                         <option>Horror</option>
                         <option>Literary Fiction</option>
                         <option>Romance</option>
-                        <option>Sci-Fiction</option>
+                        <option>Science Fiction</option>
                         <option>Short-Stories</option>
                         <option>Suspense/Thrillers</option>
                         <option>Biographies</option>
