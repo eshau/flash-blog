@@ -52,7 +52,7 @@ def login():
                 else:
                     return 'Invalid username/password combination'
             else:
-                return 'You must register first'
+                return 'You must register first.'
 
 # @app.route('/login', methods=['POST'])
 # def login():
@@ -68,22 +68,25 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'GET':
-        data= {
-            'if_logged_in': 1 if 'username' in session else 0
-        }        
-        return render_template('register.html',data=data)
+    if 'username' in session:
+        return "You are already logged in."
     else:
-        users = mongo.db.users
-        existing_user = users.find_one({'name' : request.form['username']})
-
-        if existing_user is None:
-            hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
-            users.insert({'name' : request.form['username'], 'password' : hashpass})
-            session['username'] = request.form['username']
-            return redirect(url_for('login'))
+        if request.method == 'GET':
+            data= {
+                'if_logged_in': 1 if 'username' in session else 0
+            }        
+            return render_template('register.html',data=data)
         else:
-            return 'That username already exists!'
+            users = mongo.db.users
+            existing_user = users.find_one({'name' : request.form['username']})
+
+            if existing_user is None:
+                hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+                users.insert({'name' : request.form['username'], 'password' : hashpass})
+                session['username'] = request.form['username']
+                return redirect(url_for('login'))
+            else:
+                return 'That username already exists!'
 
 @app.route('/logout')
 def logout():
@@ -169,7 +172,6 @@ def tag_by(book_review_tag):
         data = {
             'book_reviews':book_reviews.find({'author':book_review_tag}).sort([('rating',-1),('time', -1)]),
             'if_logged_in': 1 if 'username' in session else 0
-            
         }
     return render_template('home_page.html', data=data, model=model, time=datetime.now())
 
