@@ -10,7 +10,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import os
 from dotenv import load_dotenv
-from datetime import datetime
+from datetime import datetime, timezone
 import model
 import bcrypt
 
@@ -84,7 +84,7 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/home', methods=['GET','POST'])
 def home_page():
     data = {
         'book_reviews':mongo.db["books-list"].find({}).sort('time', -1).limit(20),
@@ -110,7 +110,7 @@ def new_post():
             rating = int(rating)
         else:
             rating = float(rating)
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         book_review = {
             "book_title" : book_title,
             "post_title" : post_title,
@@ -120,6 +120,7 @@ def new_post():
             "review" : review,
             "rating" : rating,
             "time" : now,
+            "user": session['username'],
         }
         book_reviews.insert(book_review)
         return redirect(url_for('home_page'))
