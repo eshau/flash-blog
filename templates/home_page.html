@@ -71,27 +71,27 @@
                 Sort By
             </h3>
             <hr class="mt-0 mb-1" style="border-top: 1px solid"/>
-            <form method="POST" action="/sort_by" class="pl-1">
+             <form method="POST" action="/sort_by" class="pl-1">
                 <div class="form-group mb-0">
                     <h4 class="mb-0"><strong>Genre</strong></h4>
                 </div>
                 <div class="form-group mb-0 ml-1">
-                    <label for="genres_options" class="mb-0">Genre Selection Options</label>
+                    <label for="genres_options" class="mb-1">Genre Selection Options</label>
                 </div>
-                <div class="form-row ml-0">
+                <div class="form-row ml-0 mb-2">
                     <div class="form-group col-4 mb-0">
-                        <label class="radio-inline mb-0"><input type="radio" name="genres_options" value="none" checked> None</label>
+                        <label class="radio-inline mb-0" title="Displays books with none of the selected genres"><input type="radio" name="genres_options" value="none" checked> None</label>
                     </div>
                     <div class="form-group col-4 mb-0">
-                        <label class="radio-inline mb-0"><input type="radio" name="genres_options" value="any"> Any</label>
+                        <label class="radio-inline mb-0" title="Displays books with any of the selected genres"><input type="radio" name="genres_options" value="any"> Any</label>
                     </div>
                     <div class="form-group col-4 mb-0">
-                        <label class="radio-inline mb-0"><input type="radio" name="genres_options" value="all"> All</label>
+                        <label class="radio-inline mb-0" title="Displays books with all of the selected genres"><input type="radio" name="genres_options" value="all"> All</label>
                     </div>
                 </div>
                 <label for="genres" class="mb-0 ml-1">Genres</label><br>
                 <div class="form-group ml-1">
-                    <select class="selectpicker form-control" name="genres" data-title="Select the genres you want to include" multiple>
+                    <select class="selectpicker form-control" name="genres" data-title="Select genres" multiple>
                         <option>Action/Adventure</option>
                         <option>Classics</option>
                         <option>Comic/Graphic Novel</option>
@@ -111,21 +111,21 @@
                     </select>
                 </div>
                 <div class="form-group mb-0">
-                    <h4 class="mb-0"><strong>Ratings</strong></h4>
+                    <h4 class="mb-1"><strong>Ratings</strong></h4>
                 </div>
                 <div class="form-group mb-0 ml-1">
                     <label for="ratings_range_options" class="mb-0">Ratings Range Options</label>
                 </div>
-                <div class="form-row ml-0">
-                    <div class="form-group col-4 mb-0">
-                        <label class="radio-inline mb-0"><input type="radio" name="ratings_range_options" value="max_to_min" checked> Max to Min</label>
+                <div class="form-row ml-0 mb-2">
+                    <div class="form-group col-6 mb-0">
+                        <label class="radio-inline mb-0" title="Sorts books from highest rating to lowest rating"><input type="radio" name="ratings_range_options" value="max_to_min" checked> Max to Min</label>
                     </div>
-                    <div class="form-group col-4 mb-0">
-                        <label class="radio-inline mb-0"><input type="radio" name="ratings_range_options" value="min_to_max"> Min to Max</label>
+                    <div class="form-group col-6 mb-0">
+                        <label class="radio-inline mb-0" title="Sorts books from lowest rating to highest rating"><input type="radio" name="ratings_range_options" value="min_to_max"> Min to Max</label>
                     </div>
                 </div>
                 <div class="form-group ml-1">
-                    <label for="ratings_range_slider">Rating</label>
+                    <label for="ratings_range_slider" title="Sets bounds for display" class="mb-1">Rating Bounds</label>
                     <input type="text" id="sort-ratings-slider" name="ratings_range_slider" />
                 </div>
                 <div class="form-group">
