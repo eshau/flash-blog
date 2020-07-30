@@ -31,13 +31,16 @@ mongo = PyMongo(app)
 
 # -- Routes section --
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     if 'username' in session:
         return redirect(url_for('home_page'))
     else:
         if request.method == 'GET':
-            return render_template('log_in_form.html', if_log_in='username' in session)
+            data= {
+                'if_logged_in': 1 if 'username' in session else 0
+            }
+            return render_template('log_in_form.html', data=data)
         else:
             users = mongo.db.users
             login_user = users.find_one({'name' : request.form['username']})
@@ -66,7 +69,10 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        return render_template('register.html', if_log_in='username' in session)
+        data= {
+            'if_logged_in': 1 if 'username' in session else 0
+        }        
+        return render_template('register.html',data=data)
     else:
         users = mongo.db.users
         existing_user = users.find_one({'name' : request.form['username']})
@@ -84,53 +90,65 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route('/home', methods=['GET','POST'])
+@app.route('/', methods=['GET','POST'])
 def home_page():
     data = {
         'book_reviews':mongo.db["books-list"].find({}).sort('time', -1).limit(20),
+        'if_logged_in': 1 if 'username' in session else 0   
     }
-    return render_template('home_page.html', data=data, model=model, time=datetime.now(), if_log_in='username' in session)
+    return render_template('home_page.html', data=data, model=model, time=datetime.now())
 
 
 @app.route('/new_post', methods=['GET','POST'])
 def new_post():
-    if request.method == 'GET':
-        return render_template('new_post.html', time=datetime.now())
+    if 'username' not in session:
+        return "Not logged in"
+        
     else:
-        book_reviews = mongo.db['books-list']
-        form = request.form
-        book_title = form["book_title"]
-        post_title = form["post_title"]
-        author = form["author"]
-        genres = form.getlist('genres')
-        image_link = form['image_link']
-        review = form["review"]
-        rating = form["rating"]
-        if float(rating) % 1 == 0:
-            rating = int(rating)
+        if request.method == 'GET':
+            data= {
+                'if_logged_in': 1 if 'username' in session else 0
+
+            }
+            return render_template('new_post.html', time=datetime.now(), data=data)
         else:
-            rating = float(rating)
-        now = datetime.now(timezone.utc)
-        book_review = {
-            "book_title" : book_title,
-            "post_title" : post_title,
-            "author" : author,
-            "genres" : genres,
-            "image_link" : image_link,
-            "review" : review,
-            "rating" : rating,
-            "time" : now,
-            "user": session['username'],
-        }
-        book_reviews.insert(book_review)
-        return redirect(url_for('home_page'))
+            book_reviews = mongo.db['books-list']
+            form = request.form
+            book_title = form["book_title"]
+            post_title = form["post_title"]
+            author = form["author"]
+            genres = form.getlist('genres')
+            image_link = form['image_link']
+            review = form["review"]
+            rating = form["rating"]
+            if float(rating) % 1 == 0:
+                rating = int(rating)
+            else:
+                rating = float(rating)
+            now = datetime.now(timezone.utc)
+            book_review = {
+                "book_title" : book_title,
+                "post_title" : post_title,
+                "author" : author,
+                "genres" : genres,
+                "image_link" : image_link,
+                "review" : review,
+                "rating" : rating,
+                "time" : now,
+                "user": session['username'],
+            }
+            book_reviews.insert(book_review)
+            return redirect(url_for('home_page'))
 
 @app.route('/blog_post/<book_review_id>')
 def blog_post(book_review_id):
     book_reviews = mongo.db["books-list"]
     book_review_id = ObjectId(book_review_id)
     book_review = book_reviews.find_one({'_id':book_review_id})
-    return render_template('blog_post.html', book_review=book_review, model=model, time=datetime.now(), if_log_in='username' in session)
+    data= {
+        'if_logged_in': 1 if 'username' in session else 0
+    }
+    return render_template('blog_post.html', book_review=book_review, model=model, time=datetime.now(), data=data)
 
 @app.route('/tag_by/<book_review_tag>')
 def tag_by(book_review_tag):
@@ -143,14 +161,17 @@ def tag_by(book_review_tag):
     if book_review_tag in genres:
         book_review_tag = book_review_tag.replace('|','/')
         data = {
-            'book_reviews':book_reviews.find({'genres':book_review_tag}).sort([('rating',-1),('time', -1)])
+            'book_reviews':book_reviews.find({'genres':book_review_tag}).sort([('rating',-1),('time', -1)]),
+            'if_logged_in': 1 if 'username' in session else 0
         }
         print(len(data))
     else:
         data = {
-            'book_reviews':book_reviews.find({'author':book_review_tag}).sort([('rating',-1),('time', -1)])
+            'book_reviews':book_reviews.find({'author':book_review_tag}).sort([('rating',-1),('time', -1)]),
+            'if_logged_in': 1 if 'username' in session else 0
+            
         }
-    return render_template('home_page.html', data=data, model=model, time=datetime.now(), if_log_in='username' in session)
+    return render_template('home_page.html', data=data, model=model, time=datetime.now())
 
 @app.route('/sort_by', methods=['GET', 'POST'])
 def sort_by():
@@ -203,5 +224,6 @@ def sort_by():
                                         {'rating':{'$gte': lower, '$lte': upper}}
                                     ).sort([('rating',order),('time', -1)])
                 }
-        return render_template('home_page.html', data=data, model=model, time=datetime.now(), if_log_in='username' in session)
+        data['if_logged_in'] = 1 if 'username' in session else 0
+        return render_template('home_page.html', data=data, model=model, time=datetime.now())
 

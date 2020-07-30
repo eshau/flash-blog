@@ -33,12 +33,7 @@
                             </h4>
                         </a>
                         <ul class="navbar-nav ml-auto"> 
-                            <li class="nav-item"> 
-                                <a class="btn bg-secondary text-light" href="{{url_for('new_post')}}">
-                                    <h4 class="mb-0">
-                                        + New Post
-                                    </h4>
-                                </a>
+                            <li class="nav-item mr-3" id="add_post"> 
                             </li> 
                             <li class="nav-item" id="log"> 
                             </li>
@@ -100,6 +95,18 @@
             for (i=0; i < arr.length; i++){
                 $clamp(arr[i], {clamp: 4});
             }
+            
+        </script>
+        <script>
+            function add_post(if_log_in) {
+                    if (if_log_in){
+                        return '<a class="btn bg-secondary text-light" href="{{url_for("new_post")}}"><h4 class="mb-0">+ New Post</h4></a>';
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                document.getElementById("add_post").innerHTML = add_post({{data.if_logged_in}})
         </script>
         <script>
             function add_log(if_log_in) {
@@ -110,9 +117,8 @@
                     return '<a class="btn bg-secondary text-light" href="{{url_for("login")}}"><h4 class="mb-0">Log In</h4></a>';
                 }
             }
-        </script>
-        <script>
-            document.getElementById("log").innerHTML = add_log({{if_log_in}})
+
+            document.getElementById("log").innerHTML = add_log({{data.if_logged_in}})
         </script>
         <!-- Visit https://feathericons.com/ to see icons you can use -->
     </body>
