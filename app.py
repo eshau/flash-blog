@@ -37,7 +37,7 @@ def login():
         return redirect(url_for('home_page'))
     else:
         if request.method == 'GET':
-            return render_template('log_in_form.html')
+            return render_template('log_in_form.html', if_log_in='username' in session)
         else:
             users = mongo.db.users
             login_user = users.find_one({'name' : request.form['username']})
@@ -66,7 +66,7 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('register.html', if_log_in='username' in session)
     else:
         users = mongo.db.users
         existing_user = users.find_one({'name' : request.form['username']})
@@ -89,7 +89,7 @@ def home_page():
     data = {
         'book_reviews':mongo.db["books-list"].find({}).sort('time', -1).limit(20),
     }
-    return render_template('home_page.html', data=data, model=model, time=datetime.now())
+    return render_template('home_page.html', data=data, model=model, time=datetime.now(), if_log_in='username' in session)
 
 
 @app.route('/new_post', methods=['GET','POST'])
@@ -130,7 +130,7 @@ def blog_post(book_review_id):
     book_reviews = mongo.db["books-list"]
     book_review_id = ObjectId(book_review_id)
     book_review = book_reviews.find_one({'_id':book_review_id})
-    return render_template('blog_post.html', book_review=book_review, model=model, time=datetime.now())
+    return render_template('blog_post.html', book_review=book_review, model=model, time=datetime.now(), if_log_in='username' in session)
 
 @app.route('/tag_by/<book_review_tag>')
 def tag_by(book_review_tag):
@@ -150,7 +150,7 @@ def tag_by(book_review_tag):
         data = {
             'book_reviews':book_reviews.find({'author':book_review_tag}).sort([('rating',-1),('time', -1)])
         }
-    return render_template('home_page.html', data=data, model=model, time=datetime.now())
+    return render_template('home_page.html', data=data, model=model, time=datetime.now(), if_log_in='username' in session)
 
 @app.route('/sort_by', methods=['GET', 'POST'])
 def sort_by():
@@ -203,5 +203,5 @@ def sort_by():
                                         {'rating':{'$gte': lower, '$lte': upper}}
                                     ).sort([('rating',order),('time', -1)])
                 }
-        return render_template('home_page.html', data=data, model=model, time=datetime.now())
+        return render_template('home_page.html', data=data, model=model, time=datetime.now(), if_log_in='username' in session)
 

@@ -32,12 +32,18 @@
                                 Our Book Blog
                             </h4>
                         </a>
-                        <a class="btn bg-secondary text-light ml-auto" href="{{url_for('new_post')}}">
-                            <h4 class="mb-0">
-                                + New Post
-                            </h4>
-                        </a>
-                        <a href={{url_for('logout')}}>Logout</a>
+                        <ul class="navbar-nav ml-auto"> 
+                            <li class="nav-item"> 
+                                <a class="btn bg-secondary text-light" href="{{url_for('new_post')}}">
+                                    <h4 class="mb-0">
+                                        + New Post
+                                    </h4>
+                                </a>
+                            </li> 
+                            <li class="nav-item"> 
+                                {{model.add_log(if_log_in)}}
+                            </li>
+                        </ul>
                     </nav>
               
                 </div>
