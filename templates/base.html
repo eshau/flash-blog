@@ -40,8 +40,7 @@
                                     </h4>
                                 </a>
                             </li> 
-                            <li class="nav-item"> 
-                                {{model.add_log(if_log_in)}}
+                            <li class="nav-item" id="log"> 
                             </li>
                         </ul>
                     </nav>
@@ -101,6 +100,20 @@
             for (i=0; i < arr.length; i++){
                 $clamp(arr[i], {clamp: 4});
             }
+        </script>
+        <script>
+            function add_log(if_log_in) {
+                if (if_log_in){
+                    return '<a class="btn bg-secondary text-light" href="{{url_for("logout")}}"><h4 class="mb-0">Log Out</h4></a>';
+                }
+                else{
+                    return '<a class="btn bg-secondary text-light" href="{{url_for("login")}}"><h4 class="mb-0">Log In</h4></a>';
+                }
+            }
+        </script>
+        <script>
+            document.getElementById("log").innerHTML = add_log(if_log_in)
+        </script>
         </script>
         <!-- Visit https://feathericons.com/ to see icons you can use -->
     </body>
